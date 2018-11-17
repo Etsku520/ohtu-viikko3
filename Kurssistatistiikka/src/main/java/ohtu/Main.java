@@ -81,8 +81,6 @@ public class Main {
                 System.out.println(lause);
             }
         }
-        
-        System.out.println(parsittuDataOhtu);
-
+       
     }
 }
