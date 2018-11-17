@@ -9,9 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class Stepdefs {
-    WebDriver driver = new ChromeDriver();
+    WebDriver driver = new HtmlUnitDriver();;
     String baseUrl = "http://localhost:4567";
     
     @Given("^login is selected$")
@@ -19,21 +20,6 @@ public class Stepdefs {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("login"));       
         element.click();          
-    } 
-
-    @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
-    public void username_and_password_are_given(String username, String password) throws Throwable {
-        WebElement element = driver.findElement(By.name("username"));
-        element.sendKeys(username);
-        element = driver.findElement(By.name("password"));
-        element.sendKeys(password);
-        element = driver.findElement(By.name("login"));
-        element.submit();  
-    }
-
-    @Then("^system will respond \"([^\"]*)\"$")
-    public void system_will_respond(String pageContent) throws Throwable {
-        assertTrue(driver.getPageSource().contains(pageContent));
     }
     
     @When("^correct username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
@@ -43,6 +29,11 @@ public class Stepdefs {
 
     @When("^correct username \"([^\"]*)\" and incorrect password \"([^\"]*)\" are given$")
     public void username_and_incorrect_password_are_given(String username, String password) throws Throwable {
+        logInWith(username, password);
+    }
+    
+    @When("^nonexistent username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
+    public void nonexistent_username_and_password_are_given(String username, String password) {
         logInWith(username, password);
     }
     
