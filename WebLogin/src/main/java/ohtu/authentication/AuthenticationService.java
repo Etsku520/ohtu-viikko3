@@ -33,6 +33,34 @@ public class AuthenticationService {
         if (username.length()<3 ) {
             status.addError("username should have at least 3 characters");
         }
+        
+        if (!password.equals(passwordConfirmation)) {
+            status.addError("password and password confirmation do not match");
+        }
+        
+        String testUser = "abcdefghijklmnopqrstuvwxyz";
+        
+        if (password.length() < 8) {
+            status.addError("password should have at least 8 characters");
+        }
+        
+        for (int i = 0; i < username.length(); i++) {
+            if (!testUser.contains(username.substring(i, i + 1))) {
+                status.addError("use only a-z in username");
+            }
+        }
+        boolean legit = false;
+        for (int i = 0; i < password.length(); i++) {
+            
+            if (password.substring(i, i + 1).hashCode() >= 123 || password.substring(i, i + 1).hashCode() < 65
+                    || (password.substring(i, i + 1).hashCode() > 90 && password.substring(i, i + 1).hashCode() < 97)) {
+                legit = true;
+            }
+        }
+
+        if (!legit) {
+            status.addError("Password should have at least one number or special character");
+        }
 
         if (status.isOk()) {
             userDao.add(new User(username, password));
