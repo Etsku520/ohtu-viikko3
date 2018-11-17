@@ -87,6 +87,28 @@ public class Stepdefs {
         registerWith(arg1, arg2, arg2 + "notthesame");
     }
     
+    @Given("^user with username \"([^\"]*)\" with password \"([^\"]*)\" is successfully created$")
+    public void user_with_username_with_password_is_successfully_created(String arg1, String arg2) throws Throwable {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("register new user"));       
+        element.click();
+        registerWith(arg1, arg2, arg2);
+    }
+
+    @Given("^user with username \"([^\"]*)\" and password \"([^\"]*)\" is tried to be created$")
+    public void user_with_username_and_password_is_tried_to_be_created(String arg1, String arg2) throws Throwable {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("register new user"));       
+        element.click();
+        registerWith(arg1, arg2, arg2);
+    }
+
+    @When("^The username \"([^\"]*)\" and password \"([^\"]*)\" that we tried to create is given$")
+    public void the_username_and_password_that_we_tried_t_create_is_given(String arg1, String arg2) throws Throwable {
+        logInWith(arg1, arg2);
+    }
+
+    
     
     @After
     public void tearDown(){
